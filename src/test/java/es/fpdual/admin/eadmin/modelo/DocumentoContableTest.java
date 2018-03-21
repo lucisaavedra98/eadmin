@@ -1,4 +1,4 @@
-package es.fpdual.admin.eadmin.modulo;
+package es.fpdual.admin.eadmin.modelo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -33,7 +33,6 @@ public class DocumentoContableTest {
 		assertEquals (DOCUMENTO_IMPORTE,cont.getImporte());
 		assertEquals (DOCUMENTO_INTERESADO,	cont.getNifInteresado());
 	}
-	
 	
 }
 

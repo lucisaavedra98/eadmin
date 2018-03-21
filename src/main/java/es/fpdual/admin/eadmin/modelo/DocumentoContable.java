@@ -1,4 +1,4 @@
-package es.fpdual.admin.eadmin.modulo;
+package es.fpdual.admin.eadmin.modelo;
 
 import java.math.BigDecimal;
 import java.util.Date;
