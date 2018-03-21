@@ -3,50 +3,23 @@ package es.fpdual.admin.eadmin.modulo;
 import java.util.List;
 import java.util.Date;
 
-public class Expediente {
-	private Integer codigo;
-	private String nombre;
-	private Date fechaCreacion;
-	private Date fechaArchivado;
-	private Boolean publico;
-	private EstadoExpediente estado;
+public class Expediente extends ModeloBaseAdministracionElectronica {
 
+	private Date fechaArchivado= null;
+	private EstadoExpediente estado;
+	
 	//creamos una lista de documentos
 	private List<Documento> documentos;
-		
-	public Expediente(Integer codigo, String nombre, Date fechaCreacion, Boolean publico, EstadoExpediente estado) {
-		super();
-		this.codigo = codigo;
-		this.nombre = nombre;
-		this.fechaCreacion = fechaCreacion;
-		this.publico = publico;
+	
+	//Constructor
+	public Expediente(Integer codigo, String nombre, Date fechaCreacion, Boolean publico,
+			EstadoExpediente estado) {
+		super(codigo, nombre, fechaCreacion, publico);
+		this.fechaArchivado = fechaArchivado;
 		this.estado = estado;
+		this.documentos = documentos;
 	}
-
-	public Integer getCodigo() {
-		return codigo;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public Date getFechaCreacion() {
-		return fechaCreacion;
-	}
-
-	public Date getFechaArchivado() {
-		return fechaArchivado;
-	}
-
-	public Boolean getPublico() {
-		return publico;
-	}
-
-	public EstadoExpediente getEstado() {
-		return estado;
-	}
-
+	
 	/*
 	public void archivar() {
 		if (fechaArchivado == null) {
@@ -54,8 +27,37 @@ public class Expediente {
 			this.fechaArchivado= new Date();
 		}
 	}
-	*/
-	
+	*/	
+
+	public Date getFechaArchivado() {
+		return fechaArchivado;
+	}
+
+	public void setFechaArchivado(Date fechaArchivado) {
+		this.fechaArchivado = fechaArchivado;
+	}
+
+
+	public EstadoExpediente getEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(EstadoExpediente estado) {
+		this.estado = estado;
+	}
+
+
+	public List<Documento> getDocumentos() {
+		return documentos;
+	}
+
+
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
+	}
+
+
 	/*Para poder crear un expediente deben coincidir todos los campos, menos la lista*/
 	@Override
 	public int hashCode() {
@@ -67,12 +69,6 @@ public class Expediente {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Expediente) {
-			/*return codigo.equals(((Expediente) obj).getCodigo()) && 
-					nombre.equals(((Expediente) obj).getNombre()) &&  
-					fechaCreacion.equals(((Expediente) obj).getFechaCreacion()) &&
-					publico.equals(((Expediente) obj).getPublico()) &&
-					estado.equals(((Expediente) obj).getEstado());*/
-			
 			return codigo.equals(((Expediente) obj).getCodigo()) && 
 					nombre.equals(((Expediente) obj).getNombre()) &&  
 					fechaCreacion.equals(((Expediente) obj).getFechaCreacion()) &&  

@@ -2,7 +2,7 @@ package es.fpdual.admin.eadmin.modulo;
 
 import java.util.Date;
 
-public class DocumentoRegistro extends Documento{
+public class DocumentoRegistro extends Documento {
 	private String nifInteresado;
 	private String controlRegistro;
 	

@@ -23,7 +23,7 @@ public class ExpedienteTest {
 	public void Inicializar() {
 		exp = 
 		new Expediente (CODIGO_EXPEDIENTE,NOMBRE_EXPEDIENTE,FECHA_CREACION,
-				EXPEDIENTE_PUBLICO,EstadoExpediente.INICIADO);
+				EXPEDIENTE_PUBLICO, EstadoExpediente.INICIADO);
 	}
 	
 	@Test
