@@ -50,4 +50,10 @@ public class Documento {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "Documento [codigo=" + codigo + ", nombre=" + nombre + ", fechaCreacion=" + fechaCreacion + ", publico="
+				+ publico + ", estado=" + estado + "]";
+	}
+
 }

@@ -24,4 +24,9 @@ public class DocumentoContable extends Documento {
 		return nifInteresado;
 	}
 
+	@Override
+	public String toString() {
+		return "DocumentoContable [importe=" + importe + ", nifInteresado=" + nifInteresado + "]";
+	}
+
 }
