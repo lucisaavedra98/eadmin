@@ -6,14 +6,17 @@ public abstract class ModeloBaseAdministracionElectronica {
 	protected Integer codigo;
 	protected String nombre;
 	protected Date fechaCreacion;
+	protected Date fechaUltimaModificacion;
 	protected Boolean publico;
 	
 	//Constructor
-	public ModeloBaseAdministracionElectronica(Integer codigo, String nombre, Date fechaCreacion, Boolean publico) {
+	public ModeloBaseAdministracionElectronica(Integer codigo, String nombre, Date fechaCreacion,
+			Date fechaUltimaModificacion, Boolean publico) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.fechaCreacion = fechaCreacion;
+		this.fechaUltimaModificacion = fechaUltimaModificacion;
 		this.publico = publico;
 	}
 
@@ -27,6 +30,10 @@ public abstract class ModeloBaseAdministracionElectronica {
 
 	public Date getFechaCreacion() {
 		return fechaCreacion;
+	}
+
+	public Date getFechaUltimaModificacion() {
+		return fechaUltimaModificacion;
 	}
 
 	public Boolean getPublico() {

@@ -14,7 +14,7 @@ public class Expediente extends ModeloBaseAdministracionElectronica {
 	//Constructor
 	public Expediente(Integer codigo, String nombre, Date fechaCreacion, Boolean publico,
 			EstadoExpediente estado) {
-		super(codigo, nombre, fechaCreacion, publico);
+		super(codigo, nombre, fechaCreacion, fechaCreacion, publico);
 		this.fechaArchivado = fechaArchivado;
 		this.estado = estado;
 		this.documentos = documentos;

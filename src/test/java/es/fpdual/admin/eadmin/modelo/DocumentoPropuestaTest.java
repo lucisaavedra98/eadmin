@@ -11,6 +11,7 @@ public class DocumentoPropuestaTest {
 	private static final Integer CODIGO_DOCUMENTO= 1;
 	private static final String NOMBRE_DOCUMENTO = "nombre";
 	private static final Date FECHA_CREACION= new Date();
+	private static final Date FECHA_ULTIMA_MODIFICACION= new Date(4/12/2018);
 	private static final boolean DOCUMENTO_PUBLICO= true;
 	private static final Integer COD_PROPUESTA_DOCUMENTO= 1;
 	private static final Integer DOCUMENTO_EJERCICIO= 1;
@@ -22,7 +23,7 @@ public class DocumentoPropuestaTest {
 		public void Inicializar() {
 			propuesta = 
 			new DocumentoPropuesta (CODIGO_DOCUMENTO,NOMBRE_DOCUMENTO,FECHA_CREACION,
-					DOCUMENTO_PUBLICO,EstadoDocumento.ACTIVO,COD_PROPUESTA_DOCUMENTO,DOCUMENTO_EJERCICIO,DOCUMENTO_PARTIDO);
+					null, DOCUMENTO_PUBLICO,EstadoDocumento.ACTIVO,COD_PROPUESTA_DOCUMENTO,DOCUMENTO_EJERCICIO,DOCUMENTO_PARTIDO);
 		}
 		
 		@Test
