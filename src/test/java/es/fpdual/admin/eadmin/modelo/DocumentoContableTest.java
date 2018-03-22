@@ -11,14 +11,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DocumentoContableTest {
-	private static final Date FECHA_CREACION= new Date();
-	private static final String NOMBRE_DOCUMENTO = "nombre";
-	private static final boolean DOCUMENTO_PUBLICO= true;
 	private static final Integer CODIGO_DOCUMENTO= 1;
+	private static final String NOMBRE_DOCUMENTO = "nombre";
+	private static final Date FECHA_CREACION= new Date();
+	private static final boolean DOCUMENTO_PUBLICO= true;
 	private static final BigDecimal DOCUMENTO_IMPORTE= new java.math.BigDecimal("0");
 	private static final String DOCUMENTO_INTERESADO= "17481797A";
 	
-	//Inicializamos el objeto para poder modificarlo
 	DocumentoContable cont;
 	
 	@Before

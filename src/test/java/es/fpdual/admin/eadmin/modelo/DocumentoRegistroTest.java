@@ -16,7 +16,6 @@ public class DocumentoRegistroTest {
 	private static final String DOCUMENTO_INTERESADO= "17481797A";
 	private static final String DOCUMENTO_CONTROL= "12346";
 	
-	//Inicializamos el objeto para poder modificarlo
 	DocumentoRegistro contable;
 	
 	@Before

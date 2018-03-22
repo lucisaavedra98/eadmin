@@ -20,7 +20,6 @@ public class DocumentoTest {
 	private static final boolean DOCUMENTO_PUBLICO= true;
 	private static final Integer CODIGO_DOCUMENTO= 1;
 	
-	//Inicializamos el objeto para poder modificarlo
 	Documento doc;
 	
 	@Before
