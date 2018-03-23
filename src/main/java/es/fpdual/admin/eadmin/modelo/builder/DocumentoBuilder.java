@@ -7,6 +7,7 @@ import es.fpdual.admin.eadmin.modelo.EstadoDocumento;
 
 public class DocumentoBuilder {
 	//Atributos de Documento y sus padres
+	
 	protected Integer codigo;
 	protected String nombre;
 	protected Date fechaCreacion;
