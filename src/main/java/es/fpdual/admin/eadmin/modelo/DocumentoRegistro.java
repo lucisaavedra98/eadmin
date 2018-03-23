@@ -3,8 +3,8 @@ package es.fpdual.admin.eadmin.modelo;
 import java.util.Date;
 
 public class DocumentoRegistro extends Documento {
-	private String nifInteresado;
-	private String controlRegistro;
+	private final String nifInteresado;
+	private final String controlRegistro;
 	
 	//Constructor
 	public DocumentoRegistro(Integer codigo, String nombre, Date fechaCreacion, Date fechaUltimaModificacion,

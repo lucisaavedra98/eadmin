@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Documento extends ModeloBaseAdministracionElectronica {
 	
-	private EstadoDocumento estado;
+	private final EstadoDocumento estado;
 
 	public Documento(Integer codigo, String nombre, Date fechaCreacion, Date fechaUltimaModificacion,Boolean publico, EstadoDocumento estado) {
 		super(codigo, nombre, fechaCreacion, fechaUltimaModificacion, publico);
@@ -13,10 +13,6 @@ public class Documento extends ModeloBaseAdministracionElectronica {
 	
 	public EstadoDocumento getEstado() {
 		return estado;
-	}
-
-	public void setEstado(EstadoDocumento estado) {
-		this.estado = estado;
 	}
 
 }

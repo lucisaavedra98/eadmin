@@ -23,7 +23,7 @@ public class ExpedienteTest {
 	public void Inicializar() {
 		exp = 
 		new Expediente (CODIGO_EXPEDIENTE,NOMBRE_EXPEDIENTE,FECHA_CREACION,
-				EXPEDIENTE_PUBLICO, EstadoExpediente.INICIADO);
+				null, EXPEDIENTE_PUBLICO, EstadoExpediente.INICIADO, null);
 	}
 	
 	@Test
@@ -38,14 +38,14 @@ public class ExpedienteTest {
 	@Test
 	public void deberiaDevolverTrueSiTienenIgualCodigo() {
 		final Expediente exp2 = new Expediente (CODIGO_EXPEDIENTE,NOMBRE_EXPEDIENTE,FECHA_CREACION
-				,EXPEDIENTE_PUBLICO,EstadoExpediente.INICIADO);
+				,FECHA_ARCHIVADO, EXPEDIENTE_PUBLICO,EstadoExpediente.INICIADO, null);
 		final boolean resultado = exp2.equals(exp);
 		assertTrue(resultado);
 	}
 	
 	@Test
 	public void deberiaDevolverFalseSiNoTienenIgualCodigo() {
-		final Expediente exp2 = new Expediente (2,null,null,null, null);
+		final Expediente exp2 = new Expediente (2,null,null,null, null, null, null);
 		final Boolean resultado = exp2.equals(exp);
 		assertFalse(resultado);
 	}
@@ -59,7 +59,7 @@ public class ExpedienteTest {
 	@Test
 	public void deberiaDevolverHasCodeDelCodigo () {
 		final Expediente exp2 = new Expediente (CODIGO_EXPEDIENTE,NOMBRE_EXPEDIENTE,FECHA_CREACION
-				,EXPEDIENTE_PUBLICO,EstadoExpediente.INICIADO);
+				,FECHA_ARCHIVADO, EXPEDIENTE_PUBLICO,EstadoExpediente.INICIADO, null);
 		final int resultado = exp.hashCode();
 		assertEquals(resultado,exp2.hashCode());
 	}

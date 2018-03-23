@@ -3,11 +3,11 @@ package es.fpdual.admin.eadmin.modelo;
 import java.util.Date;
 
 public abstract class ModeloBaseAdministracionElectronica {
-	protected Integer codigo;
-	protected String nombre;
-	protected Date fechaCreacion;
-	protected Date fechaUltimaModificacion;
-	protected Boolean publico;
+	protected final Integer codigo;
+	protected final String nombre;
+	protected final Date fechaCreacion;
+	protected final Date fechaUltimaModificacion;
+	protected final Boolean publico;
 	
 	//Constructor
 	public ModeloBaseAdministracionElectronica(Integer codigo, String nombre, Date fechaCreacion,

@@ -5,20 +5,20 @@ import java.util.Date;
 
 public class Expediente extends ModeloBaseAdministracionElectronica {
 
-	private Date fechaArchivado= null;
-	private EstadoExpediente estado;
+	private final Date fechaArchivado= null;
+	private final EstadoExpediente estado;
 	
 	//creamos una lista de documentos
 	private List<Documento> documentos;
 	
 	//Constructor
-	public Expediente(Integer codigo, String nombre, Date fechaCreacion, Boolean publico,
-			EstadoExpediente estado) {
-		super(codigo, nombre, fechaCreacion, fechaCreacion, publico);
-		this.fechaArchivado = fechaArchivado;
+	public Expediente(Integer codigo, String nombre, Date fechaCreacion, Date fechaUltimaModificacion, Boolean publico,
+			EstadoExpediente estado, List<Documento> documentos) {
+		super(codigo, nombre, fechaCreacion, fechaUltimaModificacion, publico);
 		this.estado = estado;
 		this.documentos = documentos;
 	}
+
 	
 	/*
 	public void archivar() {
@@ -28,25 +28,14 @@ public class Expediente extends ModeloBaseAdministracionElectronica {
 		}
 	}
 	*/	
-
+	
 	public Date getFechaArchivado() {
 		return fechaArchivado;
 	}
 
-	public void setFechaArchivado(Date fechaArchivado) {
-		this.fechaArchivado = fechaArchivado;
-	}
-
-
 	public EstadoExpediente getEstado() {
 		return estado;
 	}
-
-
-	public void setEstado(EstadoExpediente estado) {
-		this.estado = estado;
-	}
-
 
 	public List<Documento> getDocumentos() {
 		return documentos;
