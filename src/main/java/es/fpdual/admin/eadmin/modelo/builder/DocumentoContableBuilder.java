@@ -1,0 +1,34 @@
+package es.fpdual.admin.eadmin.modelo.builder;
+
+import java.math.BigDecimal;
+
+import es.fpdual.admin.eadmin.modelo.Documento;
+import es.fpdual.admin.eadmin.modelo.DocumentoContable;
+
+public class DocumentoContableBuilder extends DocumentoBuilder {
+	private BigDecimal importe;
+	private String nifInteresado;
+	
+	public Documento build () {
+		return new DocumentoContable (this.codigo,this.nombre,this.fechaCreacion,
+				this.fechaUltimaModificacion,this.publico,this.estado,this.importe,this.nifInteresado);
+	}
+
+	public DocumentoContableBuilder conImporte(BigDecimal importe) {
+		this.importe=importe;
+		return this;
+	}
+	
+	public DocumentoContableBuilder conNifInteresado(String nifInteresado) {
+		this.nifInteresado=nifInteresado;
+		return this;
+	}
+	
+	public DocumentoContableBuilder clonar (DocumentoContable documentoContable) {
+		super.clonar(documentoContable);
+		this.importe=documentoContable.getImporte();
+		this.nifInteresado=documentoContable.getNifInteresado();
+		return this;
+	}
+	
+}
