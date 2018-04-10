@@ -384,10 +384,10 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 	public static void exportarExcelEnUnSoloArchivo(String nombreHoja, Documento documento) {
 		Map<String, Object[]> documentos = new TreeMap<String, Object[]>();
-		
+
 		XSSFSheet sheet = null;
 		File archivoExcel = new File("Excel.xlsx");
-		XSSFWorkbook workbook =  new XSSFWorkbook();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		if (!archivoExcel.exists()) {
 			sheet = workbook.createSheet("Alta");
