@@ -47,14 +47,18 @@ public class CargarDatosIniciales implements ApplicationRunner {
 		repositorioDocumento.escribirAltaDocumento(documento3);
 		repositorioDocumento.escribirAltaDocumento(documento4);
 		repositorioDocumento.escribirAltaDocumento(documento5);
+		repositorioDocumento.obtenerTodosLosDocumentos();
 		repositorioDocumento.guardarDocumentosEnArchivoTexto();
 		repositorioDocumento.escribirModificarDocumento(documento2);
 		repositorioDocumento.escribirModificarDocumento(documento4);
 		repositorioDocumento.guardarDocumentosEnArchivoTexto();
+		repositorioDocumento.obtenerTodosLosDocumentos();
 		repositorioDocumento.escribirEliminarDocumento(documento1.getCodigo());
 		repositorioDocumento.escribirEliminarDocumento(documento3.getCodigo());
 		repositorioDocumento.escribirEliminarDocumento(documento5.getCodigo());
 		repositorioDocumento.guardarDocumentosEnArchivoTexto();
+		repositorioDocumento.obtenerTodosLosDocumentos();
+
 		
 		repositorioExpediente.escribirEnArchivoAltaExpediente(expediente1);
 		repositorioExpediente.escribirEnArchivoAltaExpediente(expediente2);

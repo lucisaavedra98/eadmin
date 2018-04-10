@@ -17,15 +17,19 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Iterator;
 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import es.fpdual.admin.eadmin.EadminApplication;
 import es.fpdual.admin.eadmin.modelo.Documento;
 import es.fpdual.admin.eadmin.repositorio.RepositorioDocumento;
 
@@ -33,6 +37,9 @@ import es.fpdual.admin.eadmin.repositorio.RepositorioDocumento;
 public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RepositorioDocumentoImpl.class);
+
+	private final Integer numeroFilasAlta = 0, numeroFilasModificar = 0, numeroFilasEliminar = 0,
+			numeroFilasTodosLosDocumentos = 0;
 
 	private List<Documento> documentos = new ArrayList<>();
 
@@ -130,9 +137,12 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 			LOGGER.info("Estado:" + documento.getEstado());
 			LOGGER.info("");
 			LOGGER.info("**************************************************************************");
+			exportarExcelEnUnSoloArchivo("Todos", documento);
 
 		}
 		LOGGER.info("TODOS LOS DOCUMENTOS LISTADOS");
+		guardarDocumentosEnArchivoTexto();
+		LOGGER.info("TODOS LOS DOCUMENTOS GUARDADOS EN UN ARHIVO DE TEXTO");
 		LOGGER.info("FIN");
 		LOGGER.info("Salieno del método " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		return documentos;
@@ -140,7 +150,6 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 	public void guardarDocumentosEnArchivoTexto() {
 		LOGGER.info("Entrando al método " + Thread.currentThread().getStackTrace()[1].getMethodName());
-
 		String ruta = "ListaDeTodosLosDocumentos.txt";
 		File archivo = new File(ruta);
 		FileWriter file = null;
@@ -185,7 +194,8 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 		else {
 			documentos.add(documento);
-			exportExcel("Alta",documento, Thread.currentThread().getStackTrace()[1].getMethodName()+".xlsx");
+			exportExcel("Alta", documento, Thread.currentThread().getStackTrace()[1].getMethodName() + ".xlsx");
+			exportarExcelEnUnSoloArchivo("Alta", documento);
 			LOGGER.info(documento.toString() + " se ha creado correctamente.");
 
 			System.out.println("INICIANDO ESCRITURA EN ALTA..");
@@ -226,7 +236,8 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 		else {
 			documentos.set(documentos.indexOf(documento), documento);
-			exportExcel("Modificar",documento, Thread.currentThread().getStackTrace()[1].getMethodName()+".xlsx");
+			exportExcel("Modificar", documento, Thread.currentThread().getStackTrace()[1].getMethodName() + ".xlsx");
+			exportarExcelEnUnSoloArchivo("Modificar", documento);
 			LOGGER.info(documento.toString() + " ha sido modificado correctamente.");
 
 			System.out.println("INICIANDO ESCRITURA EN MODIFICACIÓN..");
@@ -268,7 +279,9 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 		if (Objects.nonNull(documentoEncontrado)) {
 			documentos.remove(documentoEncontrado);
-			exportExcel("Eliminar",documentoEncontrado, Thread.currentThread().getStackTrace()[1].getMethodName()+".xlsx");
+			exportExcel("Eliminar", documentoEncontrado,
+					Thread.currentThread().getStackTrace()[1].getMethodName() + ".xlsx");
+			exportarExcelEnUnSoloArchivo("Eliminar", documentoEncontrado);
 			LOGGER.info(documentoEncontrado.toString() + " ha sido eliminado correctamente.");
 
 			System.out.println("INICIANDO ESCRITURA EN ELIMINAR..");
@@ -308,7 +321,8 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 		File archivoExcel = new File(fileName);
 		if (!archivoExcel.exists()) {
-			documentos.put("0", new Object[] { "ID", "Nombre", "Fecha Creación", "Fecha Última Modificación", "Público","Estado" });
+			documentos.put("0", new Object[] { "ID", "Nombre", "Fecha Creación", "Fecha Última Modificación", "Público",
+					"Estado" });
 			numeroLineas++;
 		} else {
 			ArrayList<String[]> datosExcel = importExcel(fileName, 6);
@@ -368,78 +382,91 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 		}
 	}
 
-	public static boolean exportarExcelEnUnSoloArchivo (String nombreHoja, Documento documento, String fileName) {
-		
+	public static void exportarExcelEnUnSoloArchivo(String nombreHoja, Documento documento) {
 		Map<String, Object[]> documentos = new TreeMap<String, Object[]>();
-		Integer numeroLineas = 0;
+		
+		XSSFSheet sheet = null;
+		File archivoExcel = new File("Excel.xlsx");
+		XSSFWorkbook workbook =  new XSSFWorkbook();
 
-		File archivoExcel = new File(fileName);
 		if (!archivoExcel.exists()) {
-			documentos.put("0", new Object[] { "ID", "Nombre", "Fecha Creación", "Fecha Última Modificación", "Público","Estado" });
-			numeroLineas++;
+			sheet = workbook.createSheet("Alta");
+			documentos.put("0", new Object[] { "ID", "Nombre", "Fecha Creación", "Fecha Última Modificación", "Público",
+					"Estado" });
+			sheet = workbook.createSheet("Modificar");
+			documentos.put("0", new Object[] { "ID", "Nombre", "Fecha Creación", "Fecha Última Modificación", "Público",
+					"Estado" });
+			sheet = workbook.createSheet("Eliminar");
+			documentos.put("0", new Object[] { "ID", "Nombre", "Fecha Creación", "Fecha Última Modificación", "Público",
+					"Estado" });
+			sheet = workbook.createSheet("Todos");
+			documentos.put("0", new Object[] { "ID", "Nombre", "Fecha Creación", "Fecha Última Modificación", "Público",
+					"Estado" });
+
+			try {
+				FileOutputStream outputStream = new FileOutputStream(archivoExcel);
+				workbook.write(outputStream);
+				outputStream.close();
+				workbook.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Listo");
 		} else {
-			ArrayList<String[]> datosExcel = importExcel(fileName, 6);
-			ListIterator<String[]> it = datosExcel.listIterator();
+			try {
+				FileInputStream inputStream = new FileInputStream(new File("Excel.xlsx"));
+				Workbook workbook2 = WorkbookFactory.create(inputStream);
 
-			while (it.hasNext()) {
-				numeroLineas++;
-				String[] datos = it.next();
-				documentos.put(numeroLineas.toString(), datos);
+				int numeroHoja;
+				if (nombreHoja.equals("Alta")) {
+					numeroHoja = 0;
+				} else if (nombreHoja.equals("Modificar")) {
+					numeroHoja = 1;
+				} else if (nombreHoja.equals("Eliminar")) {
+					numeroHoja = 2;
+				} else {
+					numeroHoja = 3;
+				}
+
+				Sheet sheet2 = workbook2.getSheetAt(numeroHoja);
+
+				Object[] bookData = { documento.getCodigo(), documento.getNombre(),
+						documento.getFechaCreacion().toString(), documento.getFechaUltimaModificacion().toString(),
+						documento.getPublico().toString(), documento.getEstado() + "" };
+
+				int rowCount = sheet2.getLastRowNum();
+
+				Row row = sheet2.createRow(++rowCount);
+
+				int columnCount = 0;
+
+				Cell cell = row.createCell(columnCount);
+				cell.setCellValue(rowCount);
+
+				for (Object field : bookData) {
+					cell = row.createCell(++columnCount);
+					if (field instanceof String) {
+						cell.setCellValue((String) field);
+					} else if (field instanceof Integer) {
+						cell.setCellValue((Integer) field);
+					}
+				}
+
+				inputStream.close();
+
+				FileOutputStream outputStream = new FileOutputStream("Excel.xlsx");
+				workbook2.write(outputStream);
+				workbook2.close();
+				outputStream.close();
+
+			} catch (IOException | EncryptedDocumentException | InvalidFormatException ex) {
+				ex.printStackTrace();
 			}
-		}
-
-		numeroLineas++;
-		documentos.put(numeroLineas.toString(),
-				new Object[] { documento.getCodigo(), documento.getNombre(), documento.getFechaCreacion().toString(),
-						documento.getFechaUltimaModificacion().toString(), documento.getPublico().toString(),
-						documento.getEstado() + "" });
-		
-		// Creamos el libro de trabajo
-		XSSFWorkbook libro = new XSSFWorkbook();
-		/*
-		// Creacion de Hoja
-		if (libro.getSheetAt(0) == null) {
-		XSSFSheet hoja = libro.createSheet(nombreHoja);
-		}
-		*/
-
-		XSSFSheet hoja = libro.createSheet(nombreHoja);
-		
-		// Iteramos el map e insertamos los datos
-		Set<String> keyset = documentos.keySet();
-		int rownum = 0;
-		for (String key : keyset) {
-			// cramos la fila
-			Row row= hoja.createRow(rownum++);
-			// obtenemos los datos de la fila
-			Object[] objArr = documentos.get(key);
-			int cellnum = 0;
-			// iteramos cada dato de la fila
-			for (Object obj : objArr) {
-				// Creamos la celda
-				Cell cell = row.createCell(cellnum++);
-				// Setteamos el valor con el tipo de dato correspondiente
-				if (obj instanceof String)
-					cell.setCellValue((String) obj);
-				else if (obj instanceof Integer)
-					cell.setCellValue((Integer) obj);
-			}
-		}
-		try {
-			// Escribimos en fichero
-			FileOutputStream out = new FileOutputStream(new File(fileName));
-			libro.write(out);			
-			// cerramos el fichero y el libro
-			out.close();
-			libro.close();
-			System.out.println("Excel exportado correctamente\n");
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
 		}
 	}
-	
+
 	public static ArrayList<String[]> importExcel(String fileName, int numColums) {
 
 		// ArrayList donde guardaremos todos los datos del excel
@@ -504,7 +531,7 @@ public class RepositorioDocumentoImpl implements RepositorioDocumento {
 
 		return data;
 	}
-	
+
 	protected boolean tieneIgualCodigo(Documento documento, Integer codigo) {
 		return documento.getCodigo().equals(codigo);
 	}
